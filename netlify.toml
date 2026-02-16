@@ -1,0 +1,40 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+# Apply to all contexts (production, deploy-preview, branch-deploy)
+HUSKY = "0"
+NPM_FLAGS = "--include=dev"
+
+[context.production.environment]
+# Disable husky in Netlify production builds to avoid prepare hook
+HUSKY = "0"
+# Ensure devDependencies (husky) install so prepare script has the binary
+NPM_FLAGS = "--include=dev"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "*"
+
+[[headers]]
+  for = "/remoteEntry.js"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Redirect only HTML page requests to the main shell
+[[redirects]]
+  from = "/index.html"
+  to = "https://weboc.tech"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/"
+  to = "https://weboc.tech"
+  status = 301
+  force = true
