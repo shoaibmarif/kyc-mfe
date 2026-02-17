@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Button, TextInput } from 'customMain/components';
-import { useZodForm } from '../hooks/useZodForm';
+import { useZodForm } from 'customMain/hooks';
 import { authService } from '../services/auth.service';
 import { otpVerificationSchema, type OTPVerificationFormData } from './validations';
 
@@ -43,10 +43,9 @@ export const OTPVerificationPage: React.FC<OTPVerificationPageProps> = ({
                             mobileNo,
                             otp: data['otpCode'],
                         });
-                        // TODO: Implement proper error handling and validation response
-                        // if (response?.success) { ... }
                     } catch (_error) {
-                        // TODO: Discard API errors and continue for now (remove after API setup)
+                        console.error('OTP verification error:', _error);
+                        return;
                     }
                 }
 

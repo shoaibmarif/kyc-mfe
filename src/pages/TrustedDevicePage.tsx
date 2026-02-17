@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 import { Button, TextInput, Select, SelectOption } from 'customMain/components';
-import { useZodForm } from '../hooks/useZodForm';
+import { useZodForm } from 'customMain/hooks';
 import { trustedDeviceSchema, type TrustedDeviceFormData } from './validations';
 import { authService } from '../services/auth.service';
 import { useState } from 'react';
@@ -86,7 +86,6 @@ export const TrustedDevicePage: React.FC<TrustedDevicePageProps> = ({
             });
             handleFinish();
         } catch (error) {
-            handleFinish();
             console.error('Error registering trusted device:', error);
         } finally {
             setIsLoading(false);

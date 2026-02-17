@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Button, TextInput,Select, SelectOption } from 'customMain/components';
-import { useZodForm } from '../hooks/useZodForm';
+import { useZodForm } from 'customMain/hooks';
 import { otpDeliveryPreferenceSchema, type OTPDeliveryPreferenceFormData } from './validations';
 import { authService } from '../services/auth.service';
 
@@ -98,9 +98,9 @@ export const OTPDeliveryPreferencePage: React.FC<OTPDeliveryPreferencePageProps>
                 otpCode: data.otpCode || '',
             });
             if (onConfirm) onConfirm();
-        } catch (_error) {
-            if (onConfirm) onConfirm();
-            // Error handled by API service
+        } catch (error) {
+            console.error('OTP delivery preference error:', error);
+            // Don't auto-advance on error
         }
     };
 

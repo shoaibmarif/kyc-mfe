@@ -1,21 +1,24 @@
-import { useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
+import { FieldValues, type Resolver, useForm, UseFormProps, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z, ZodTypeAny } from 'zod';
+import { type ZodTypeAny } from 'zod';
 
-interface UseZodFormProps<TSchema extends ZodTypeAny> extends UseFormProps<z.infer<TSchema>> {
-    schema: TSchema;
+interface UseZodFormProps<TFieldValues extends FieldValues>
+    extends UseFormProps<TFieldValues> {
+    schema: ZodTypeAny;
 }
 
 /**
  * Typed react-hook-form helper wired to a Zod schema.
  */
-export function useZodForm<TSchema extends ZodTypeAny>(
-    props: UseZodFormProps<TSchema>,
-): UseFormReturn<z.infer<TSchema>> {
+export function useZodForm<TFieldValues extends FieldValues>(
+    props: UseZodFormProps<TFieldValues>,
+): UseFormReturn<TFieldValues> {
     const { schema, ...formProps } = props;
 
-    return useForm<z.infer<TSchema>>({
-        resolver: zodResolver(schema),
+    const resolver = zodResolver(schema as ZodTypeAny) as Resolver<TFieldValues>;
+
+    return useForm<TFieldValues>({
+        resolver,
         mode: 'onChange',
         reValidateMode: 'onChange',
         ...formProps,

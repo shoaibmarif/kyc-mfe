@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { Button, TextInput } from 'customMain/components';
-import { useZodForm } from '../hooks/useZodForm';
+import { useZodForm } from 'customMain/hooks';
 import { mfaEnrollmentSchema, type MFAEnrollmentFormData } from './validations';
 import { authService } from '../services/auth.service';
 

@@ -5,6 +5,15 @@ declare module 'customMain/components' {
     export type SelectOption = any;
 }
 
+declare module 'customMain/hooks' {
+    export function useZodForm<TFieldValues extends Record<string, any>>(props: {
+        schema: any;
+        defaultValues?: TFieldValues;
+        mode?: string;
+        reValidateMode?: string;
+    }): any;
+}
+
 declare module 'customMain/api' {
     interface ApiService {
         get<T = unknown>(url: string, config?: unknown): Promise<T>;

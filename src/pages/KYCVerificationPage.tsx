@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Button, TextInput } from 'customMain/components';
-import { useZodForm } from '../hooks/useZodForm';
+import { useZodForm } from 'customMain/hooks';
 import { authService } from '../services/auth.service';
 import { kycVerificationSchema, type KYCVerificationFormData } from './validations';
 
@@ -62,7 +62,7 @@ export const KYCVerificationPage: React.FC<KYCVerificationPageProps> = ({
             await authService.sendOTPMobile({
                 mobileNo: mobileNo,
             });
-            // TEMP: Discard API response and continue for now
+            // Success - move forward
             setKycData({
                 employeeId: data['employeeId'] || '',
                 cnic: data['cnic'] || '',
@@ -70,15 +70,9 @@ export const KYCVerificationPage: React.FC<KYCVerificationPageProps> = ({
                 mobileNo: data['mobileNo'] || ''
             });
             if (onConfirm) onConfirm();
-        } catch (_error) {
-            // TEMP: Discard API errors and continue for now
-            setKycData({
-                employeeId: data['employeeId'] || '',
-                cnic: data['cnic'] || '',
-                email: data['email'] || '',
-                mobileNo: data['mobileNo'] || ''
-            });
-            if (onConfirm) onConfirm();
+        } catch (error) {
+            // Log error but don't auto-advance; let user fix validation errors
+            console.error('KYC submission error:', error);
         } finally {
             setIsSubmitting(false);
         }
