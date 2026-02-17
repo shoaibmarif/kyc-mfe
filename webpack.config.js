@@ -75,6 +75,8 @@ module.exports = (env, argv) => {
                 filename: 'remoteEntry.js',
                 exposes: {
                     './App': './src/App.tsx',
+                    './SignUpForm': './src/pages/SignUpForm.tsx',
+                    './services/auth': './src/services/auth/index.ts',
                 },
                 remotes: {
                     customMain: `customMain@${customMainUrl}/remoteEntry.js`,
@@ -97,22 +99,27 @@ module.exports = (env, argv) => {
                     'react-hook-form': {
                         singleton: true,
                         strictVersion: false,
+                        eager: true,
                     },
                     'react-toastify': {
                         singleton: true,
                         strictVersion: false,
+                        eager: true,
                     },
                     axios: {
                         singleton: true,
                         strictVersion: false,
+                        eager: true,
                     },
                     zod: {
                         singleton: true,
                         strictVersion: false,
+                        eager: true,
                     },
                     '@hookform/resolvers': {
                         singleton: true,
                         strictVersion: false,
+                        eager: true,
                     },
                     clsx: {
                         singleton: true,
