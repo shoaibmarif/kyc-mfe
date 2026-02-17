@@ -34,9 +34,7 @@ const KYCPage = () => {
                             </p>
                         </div>
                         <div className="p-4 border border-primary rounded-lg">
-                            <h2 className="text-lg font-semibold text-primary mb-2">
-                                Audit Trail
-                            </h2>
+                            <h2 className="text-lg font-semibold text-primary mb-2">Audit Trail</h2>
                             <p className="text-secondary text-sm">
                                 View history of KYC verifications and changes.
                             </p>

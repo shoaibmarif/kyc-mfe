@@ -25,7 +25,7 @@ module.exports = {
                 primary: 'rgb(var(--border-primary) / <alpha-value>)',
                 secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
                 ternary: 'rgb(var(--bg-ternary) / <alpha-value>)', // Use accent for rings
-            }
+            },
         },
     },
     plugins: [],
