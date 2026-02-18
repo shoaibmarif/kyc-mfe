@@ -6,12 +6,29 @@
 # Apply to all contexts (production, deploy-preview, branch-deploy)
 HUSKY = "0"
 NPM_FLAGS = "--include=dev"
+REACT_APP_ENV = "production"
+
+# Staging context (for staging branch or staging site)
+[context.staging]
+  command = "npm run build"
+  publish = "dist"
+
+[context.staging.environment]
+  HUSKY = "0"
+  NPM_FLAGS = "--include=dev"
+  REACT_APP_ENV = "staging"
+
+# Production context (main/master branch)
+[context.production]
+  command = "npm run build"
+  publish = "dist"
 
 [context.production.environment]
 # Disable husky in Netlify production builds to avoid prepare hook
 HUSKY = "0"
 # Ensure devDependencies (husky) install so prepare script has the binary
 NPM_FLAGS = "--include=dev"
+REACT_APP_ENV = "production"
 
 [[headers]]
   for = "/*"
