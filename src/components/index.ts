@@ -1,2 +1,2 @@
 // KYC Components
-// Export components as they are created
+// Using shared components from custom-main-shell

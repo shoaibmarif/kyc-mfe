@@ -34,7 +34,6 @@
         "allowUnreachableCode": false,
         "exactOptionalPropertyTypes": true,
         "paths": {
-            "customMain/*": ["../custom-main-shell/src/*"],
             "react": ["../custom-main-shell/node_modules/react"],
             "react-dom": ["../custom-main-shell/node_modules/react-dom"],
             "@types/react": ["../custom-main-shell/node_modules/@types/react"],
