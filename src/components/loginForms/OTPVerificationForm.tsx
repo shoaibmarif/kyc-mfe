@@ -47,21 +47,18 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
                             mobileNo,
                             otp: data['otpCode'],
                         });
-                        setIsOpen(true);
+                        setIsOpen(true); // Only open modal on success
                     } catch (_error) {
                         console.error('OTP verification error:', _error);
-                        setIsOpen(true);
-                    } finally {
-                        setIsOpen(true);
+                        // Optionally show error to user
+                        return;
                     }
                 }
-
                 setOtpVerificationData({
                     otpCode: data['otpCode'] || '',
                 });
             } finally {
                 setIsSubmitting(false);
-                setIsOpen(true);
             }
         },
         [mobileNo, onConfirm, setOtpVerificationData],
@@ -150,7 +147,7 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
             </form>
 
             <Modal
-                open={isOpen}
+                isOpen={isOpen}
                 onClose={() => {
                     setIsOpen(false);
                     navigate('/dashboard');
