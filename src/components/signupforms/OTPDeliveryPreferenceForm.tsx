@@ -74,7 +74,7 @@ const OTPDeliveryPreferenceForm: React.FC<OTPDeliveryPreferenceFormProps> = ({
         setIsLoadingSendOtp(true);
         try {
             await authService.signupSendOtpDeliveryPreference({
-                otpPreferenceMethodId: String(methodValue),
+                otpPreferenceMethodId: Number(methodValue),
                 mobileNo,
             });
             setOtpPreferenceData({

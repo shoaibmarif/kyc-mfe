@@ -10,7 +10,7 @@ export const authService = {
         apiService.get<ApiResponse<any>>(OTP_API_URLS.GET_PREFERENCE_METHODS),
 
     signupKYCVerification: (data: {
-        userName: string;
+        username: string;
         employeeID: string;
         cnicNumber: string;
         mobileNumber: string;
@@ -29,7 +29,7 @@ export const authService = {
     signupMfaEnrollmentAuthenticator: (data: { setUpKey: string }) =>
         apiService.post<ApiResponse>(OTP_API_URLS.MFA_ENROLLMENT_AUTHENTICATOR_OTP, data),
 
-    signupSendOtpDeliveryPreference: (data: { otpPreferenceMethodId: string; mobileNo?: string }) =>
+    signupSendOtpDeliveryPreference: (data: { otpPreferenceMethodId: number; mobileNo?: string }) =>
         apiService.post<ApiResponse>(OTP_API_URLS.SEND_OTP_DELIVERY_PREFERENCE, data),
 
     signupVerifyOtpDeliveryPreference: (data: {
@@ -43,14 +43,16 @@ export const authService = {
     signupTrustedDevice: (data: {
         employeeId?: string;
         cnic?: string;
-        email?: string;
         mobileNo?: string;
+        username?: string;
         setUpKey?: string;
         methodId?: string;
         isRegisterDevice: boolean;
+        isMigrated: boolean;
         deviceId?: string;
         validityPeriod?: number;
     }) => apiService.post<ApiResponse>(OTP_API_URLS.SIGNUP_TRUSTED_DEVICE, data),
 
+    updateUserKYC: (data: { username: string; mobile?: string; cnic?: string }) =>
+        apiService.post<ApiResponse>(AUTH_API_URLS.UPDATE_USER_KYC, data),
 };
-

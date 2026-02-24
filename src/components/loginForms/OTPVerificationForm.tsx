@@ -14,7 +14,14 @@ import Stepper from '../common/Stepper';
 interface OTPVerificationFormProps {
     otpVerificationData: { otpCode: string };
     setOtpVerificationData: (v: { otpCode: string }) => void;
-    mobileNo?: string;
+    kycData: {
+        userName: string;
+        employeeId: string;
+        cnic: string;
+        mobileNo: string;
+        newPassword: string;
+        confirmPassword: string;
+    };
     onCancel: () => void;
     onConfirm?: () => void;
 }
@@ -22,7 +29,7 @@ interface OTPVerificationFormProps {
 export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
     otpVerificationData,
     setOtpVerificationData,
-    mobileNo,
+    kycData,
     onConfirm,
 }) => {
     const navigate = useNavigate();
@@ -41,10 +48,10 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
         async (data: OTPVerificationFormData) => {
             setIsSubmitting(true);
             try {
-                if (mobileNo) {
+                if (kycData.mobileNo) {
                     try {
                         await authService.verifyOTPMobile({
-                            mobileNo,
+                            mobileNo: kycData.mobileNo,
                             otp: data['otpCode'],
                         });
                         setIsOpen(true); // Only open modal on success
@@ -61,17 +68,32 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
                 setIsSubmitting(false);
             }
         },
-        [mobileNo, onConfirm, setOtpVerificationData],
+        [kycData, onConfirm, setOtpVerificationData],
     );
 
     const handleResendOtp = useCallback(async () => {
-        if (!mobileNo) return;
+        if (!kycData.mobileNo) return;
         try {
-            await authService.resendOTPMobile({ mobileNo });
+            await authService.resendOTPMobile({ mobileNo: kycData.mobileNo });
         } catch (_error) {
             // Handle error
         }
-    }, [mobileNo]);
+    }, [kycData]);
+
+    const handleModalClose = async () => {
+        try {
+            await authService.updateUserKYC({
+                mobile: kycData.mobileNo,
+                cnic: kycData.cnic,
+                username: kycData.userName,
+            });
+        } catch (_error) {
+            // Handle error
+        } finally {
+            setIsOpen(false);
+            navigate('/dashboard');
+        }
+    };
 
     return (
         <>
@@ -87,7 +109,7 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
                     <h3 className="text-2xl font-semibold text-primary mt-6">OTP Verification</h3>
                     <p className="text-[#9A9A9A] text-sm">
                         Enter the code from the sms we sent{' '}
-                        <span className="text-[#252955] font-bold">{mobileNo}</span>
+                        <span className="text-[#252955] font-bold">{kycData.mobileNo}</span>
                     </p>
                 </div>
 
@@ -148,10 +170,7 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
 
             <Modal
                 isOpen={isOpen}
-                onClose={() => {
-                    setIsOpen(false);
-                    navigate('/dashboard');
-                }}
+                onClose={handleModalClose}
                 imageSrc={getAssetPath('assets/images/otp-verified.png')}
                 title="OTP Verified"
                 description="Your identity has been confirmed. Logging you into the dashboard."
