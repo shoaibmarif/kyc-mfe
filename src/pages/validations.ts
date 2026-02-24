@@ -52,12 +52,29 @@ const localValidations = {
 } as const;
 
 // KYC Verification Schema
-export const kycVerificationSchema = z.object({
-    employeeId: localValidations.employeeId,
-    cnic: localValidations.cnic,
-    email: localValidations.email,
-    mobileNo: localValidations.mobileNo,
-});
+const userNameValidation = z
+    .string()
+    .min(1, 'User Name is required')
+    .max(50, 'User Name must not exceed 50 characters');
+
+const newPasswordValidation = z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .max(32, 'Password must not exceed 32 characters');
+
+export const kycVerificationSchema = z
+    .object({
+        userName: userNameValidation,
+        employeeId: localValidations.employeeId,
+        cnic: localValidations.cnic,
+        mobileNo: localValidations.mobileNo,
+        newPassword: newPasswordValidation,
+        confirmPassword: newPasswordValidation,
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+        message: 'Passwords do not match with new password',
+        path: ['confirmPassword'],
+    });
 
 export type KYCVerificationFormData = z.infer<typeof kycVerificationSchema>;
 
@@ -79,12 +96,7 @@ export type MFAEnrollmentFormData = z.infer<typeof mfaEnrollmentSchema>;
 
 // OTP Delivery Preference Schema
 export const otpDeliveryPreferenceSchema = z.object({
-    method: z
-        .string()
-        .min(1, 'Delivery method is required'),
-    destination: z
-        .string()
-        .min(1, 'Destination is required'),
+    method: z.union([z.string(), z.number()]),
     otpCode: z
         .string()
         .optional()

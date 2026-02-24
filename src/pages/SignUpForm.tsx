@@ -1,17 +1,25 @@
-import { useState, useMemo } from 'react';
-import { KYCVerificationPage } from './KYCVerificationPage';
-import { OTPVerificationPage } from './OTPVerificationPage';
-import { OTPDeliveryPreferencePage } from './OTPDeliveryPreferencePage';
-import { TrustedDevicePage } from './TrustedDevicePage';
-import { MFAEnrollmentPage } from './MFAEnrollmentPage';
+import { useState } from 'react';
+import { AuthLayout } from '../components/layout/AuthLayout';
+import KYCVerificationForm from '../components/signupforms/KYCVerificationForm';
+import OTPVerificationForm from '../components/signupforms/OTPVerificationForm';
+import MFAEnrollmentForm from '../components/signupforms/MFAEnrollmentForm';
+import OTPDeliveryPreferenceForm from '../components/signupforms/OTPDeliveryPreferenceForm';
+import TrustedDeviceForm from '../components/signupforms/TrustedDeviceForm';
 
 interface SignUpFormProps {
-    onNavigateToLogin?: () => void;
+    onNavigateToSignUp?: () => void;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onNavigateToLogin }) => {
+const SignUpForm: React.FC<SignUpFormProps> = () => {
     const [step, setStep] = useState<'kyc' | 'otp' | 'mfa' | 'otpPref' | 'trusted'>('kyc');
-    const [kycData, setKycData] = useState({ employeeId: '', cnic: '', email: '', mobileNo: '' });
+    const [kycData, setKycData] = useState({
+        userName: '',
+        employeeId: '',
+        cnic: '',
+        mobileNo: '',
+        newPassword: '',
+        confirmPassword: '',
+    });
     const [otpVerificationData, setOtpVerificationData] = useState({ otpCode: '' });
     const [mfaData, setMfaData] = useState({
         setupKey: '',
@@ -28,88 +36,65 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onNavigateToLogin }) => {
         registerDevice: false,
     });
 
-    const handleNavigateToLogin = () => {
-        if (onNavigateToLogin) {
-            onNavigateToLogin();
-        } else {
-            // Default behavior - navigate to login route in kyc-mfe or custom-main-shell
-            window.location.href = '/login';
-        }
+    const handleNavigateToSignUp = () => {
+        window.location.href = '/dashboard';
     };
 
-    const stepComponents = useMemo(() => {
-        switch (step) {
-            case 'kyc':
-                return (
-                    <KYCVerificationPage
-                        onCancel={handleNavigateToLogin}
-                        onConfirm={() => setStep('otp')}
-                        kycData={kycData}
-                        setKycData={setKycData}
-                    />
-                );
-            case 'otp':
-                return (
-                    <OTPVerificationPage
-                        onCancel={() => setStep('kyc')}
-                        onConfirm={() => setStep('mfa')}
-                        otpVerificationData={otpVerificationData}
-                        setOtpVerificationData={setOtpVerificationData}
-                        mobileNo={kycData.mobileNo}
-                    />
-                );
-            case 'mfa':
-                return (
-                    <MFAEnrollmentPage
-                        onCancel={() => setStep('otp')}
-                        onConfirm={() => setStep('otpPref')}
-                        mfaData={mfaData}
-                        setMfaData={setMfaData}
-                    />
-                );
-            case 'otpPref':
-                return (
-                    <OTPDeliveryPreferencePage
-                        onCancel={() => setStep('mfa')}
-                        onConfirm={() => setStep('trusted')}
-                        otpPreferenceData={{
-                            ...otpPreferenceData,
-                            destination: kycData.mobileNo,
-                        }}
-                        setOtpPreferenceData={setOtpPreferenceData}
-                        mfaData={mfaData}
-                    />
-                );
-            case 'trusted':
-                return (
-                    <TrustedDevicePage
-                        onCancel={() => setStep('otpPref')}
-                        onConfirm={handleNavigateToLogin}
-                        trustedDeviceData={trustedDeviceData}
-                        setTrustedDeviceData={setTrustedDeviceData}
-                        kycData={kycData}
-                        otpPreferenceData={otpPreferenceData}
-                        mfaData={mfaData}
-                    />
-                );
-            default:
-                return null;
-        }
-    }, [
-        step,
-        kycData,
-        otpVerificationData,
-        mfaData,
-        otpPreferenceData,
-        trustedDeviceData,
-        handleNavigateToLogin,
-    ]);
-
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#0f2226] to-[#2d2a1e]">
-            {stepComponents}
-        </div>
+        <AuthLayout>
+            {step === 'kyc' && (
+                <KYCVerificationForm
+                    kycData={kycData}
+                    setKycData={setKycData}
+                    onCancel={handleNavigateToSignUp}
+                    onConfirm={() => setStep('otp')}
+                />
+            )}
+
+            {step === 'otp' && (
+                <OTPVerificationForm
+                    otpVerificationData={otpVerificationData}
+                    setOtpVerificationData={setOtpVerificationData}
+                    mobileNo={kycData.mobileNo}
+                    onCancel={() => setStep('kyc')}
+                    onConfirm={() => setStep('mfa')}
+                />
+            )}
+
+            {step === 'mfa' && (
+                <MFAEnrollmentForm
+                    setupKey={mfaData.setupKey}
+                    qrCode={mfaData.qrCode}
+                    authenticatorCode={mfaData.authenticatorCode}
+                    setMfaData={setMfaData}
+                    mfaData={mfaData}
+                    onSuccess={() => setStep('otpPref')}
+                />
+            )}
+
+            {step === 'otpPref' && (
+                <OTPDeliveryPreferenceForm
+                    otpPreferenceData={otpPreferenceData}
+                    setOtpPreferenceData={setOtpPreferenceData}
+                    onCancel={() => setStep('mfa')}
+                    mobileNo={kycData.mobileNo}
+                    onConfirm={() => setStep('trusted')}
+                    mfaData={mfaData}
+                />
+            )}
+
+            {step === 'trusted' && (
+                <TrustedDeviceForm
+                    trustedDeviceData={trustedDeviceData}
+                    setTrustedDeviceData={setTrustedDeviceData}
+                    kycData={kycData}
+                    mfaData={mfaData}
+                    otpPreferenceData={otpPreferenceData}
+                />
+            )}
+        </AuthLayout>
     );
 };
 
 export default SignUpForm;
+

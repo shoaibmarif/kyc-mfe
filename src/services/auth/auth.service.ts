@@ -10,10 +10,11 @@ export const authService = {
         apiService.get<ApiResponse<any>>(OTP_API_URLS.GET_PREFERENCE_METHODS),
 
     signupKYCVerification: (data: {
+        userName: string;
         employeeID: string;
-        emailAddress: string;
         cnicNumber: string;
         mobileNumber: string;
+        password: string;
     }) => apiService.post<ApiResponse>(AUTH_API_URLS.POST_SIGNUP_KYC_VERIFICATION, data),
 
     sendOTPMobile: (data: { mobileNo: string }) =>

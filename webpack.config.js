@@ -76,6 +76,7 @@ module.exports = (env, argv) => {
                 filename: 'remoteEntry.js',
                 exposes: {
                     './App': './src/App.tsx',
+                    './LoginForm': './src/pages/LoginForm.tsx',
                     './SignUpForm': './src/pages/SignUpForm.tsx',
                     './services/auth': './src/services/auth/index.ts',
                 },
