@@ -2,6 +2,10 @@ module.exports = {
     darkMode: 'class',
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['Poppins', 'sans-serif'],
+                poppins: ['Poppins', 'sans-serif'],
+            },
             // Strict Text Colors
             textColor: {
                 primary: 'rgb(var(--text-primary) / <alpha-value>)',
