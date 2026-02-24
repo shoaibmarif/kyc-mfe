@@ -49,7 +49,7 @@ export const authService = {
         methodId?: string;
         isRegisterDevice: boolean;
         deviceId?: string;
-        validityPeriod?: string;
+        validityPeriod?: number;
     }) => apiService.post<ApiResponse>(OTP_API_URLS.SIGNUP_TRUSTED_DEVICE, data),
 
 };

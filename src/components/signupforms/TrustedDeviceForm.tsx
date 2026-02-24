@@ -62,7 +62,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                 methodId: otpPreferenceData?.method,
                 isRegisterDevice: data.registerDevice,
                 deviceId,
-                validityPeriod: data.validityPeriod || '',
+                validityPeriod: data.validityPeriod && data.validityPeriod !== '' ? Number(data.validityPeriod) : 0,
             };
             await authService.signupTrustedDevice(payload);
             setTrustedDeviceData({
