@@ -131,15 +131,17 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
                     ))}
                 </div>
 
-                <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    loading={isSubmitting}
-                    className="w-full"
-                >
-                    Confirm And Request OTP
-                </Button>
+                <div className="mt-6">
+                    <Button
+                        type="submit"
+                        variant="primary"
+                        size="lg"
+                        loading={isSubmitting}
+                        className="w-full"
+                    >
+                        Confirm And Request OTP
+                    </Button>
+                </div>
             </form>
         );
     },
