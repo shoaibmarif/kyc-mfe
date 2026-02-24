@@ -1,10 +1,12 @@
-const AUTH_BASE = '/Auth';
-const OTP_BASE = '/otp';
-const KYC_BASE = '/kyc';
+const AUTH_BASE = '/kyc/auth';
+const OTP_BASE = '/kyc/otp';
+const KYC_BASE = '/kyc/kycapi';
+const AUTH_USER_BASE_API = '/Auth';
 
 export const AUTH_API_URLS = {
     LOGOUT: `${AUTH_BASE}/logout`,
     POST_SIGNUP_KYC_VERIFICATION: `${KYC_BASE}/signup-kyc-verification`,
+    UPDATE_USER_KYC: `${AUTH_USER_BASE_API}/update-user-kyc`,
 };
 
 export const OTP_API_URLS = {

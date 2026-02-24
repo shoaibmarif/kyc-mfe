@@ -41,7 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 <OTPVerificationForm
                     otpVerificationData={otpVerificationData}
                     setOtpVerificationData={setOtpVerificationData}
-                    mobileNo={kycData.mobileNo}
+                    kycData={kycData}
                     onCancel={() => setStep('kyc')}
                     onConfirm={handleNavigateToLogin}
                 />
