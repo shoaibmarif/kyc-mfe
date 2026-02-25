@@ -7,13 +7,13 @@ export const BrandingSection: React.FC = () => {
             <img
                 src={getAssetPath('assets/images/weboc-logo.svg')}
                 alt="WeBOC 2.0"
-                className="h-16 mb-6"
+                className="hidden md:block h-10 md:h-16 mb-6"
             />
-            <h2 className="text-6xl font-bold">
+            <h2 className="hidden md:block text-6xl font-bold">
                 Pakistan Customs <br />
                 Web Portal
             </h2>
-            <p className="text-xl">
+            <p className="hidden md:block text-xl">
                 Facilitating Trade, Protecting Revenue, Securing Borders.
             </p>
         </div>
