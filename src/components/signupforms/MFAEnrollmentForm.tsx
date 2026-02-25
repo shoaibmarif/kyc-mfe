@@ -30,6 +30,7 @@ const MFAEnrollmentForm: React.FC<MFAEnrollmentFormProps> = ({
     onSuccess,
 }) => {
     const [isSubmitting] = useState(false);
+    const [demoHint, setDemoHint] = useState<string>('Demo hint: 666815');
 
     // Provide a static setupKey if not passed
     const staticSetupKey = setupKey || mfaData.setupKey || 'JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP';
@@ -55,9 +56,10 @@ const MFAEnrollmentForm: React.FC<MFAEnrollmentFormProps> = ({
     // Fetch demo code for current setup key
     const fetchDemoCode = async (setupKey: string) => {
         try {
-            await authService.signupMfaEnrollmentAuthenticator({
+            const response = await authService.signupMfaEnrollmentAuthenticator({
                 setUpKey: setupKey,
             });
+           setDemoHint(`Demo hint: ${response.data.otp}`);
         } catch (_e) {
             // Optionally log or handle error
         }
@@ -86,6 +88,7 @@ const MFAEnrollmentForm: React.FC<MFAEnrollmentFormProps> = ({
                 />
                 {/* Description */}
                 <h3 className="text-2xl font-semibold text-primary mt-6">MFA Enrollment</h3>
+                <p className="text-sm text-primary mt-2">{demoHint}</p>
             </div>
 
             <div className="flex justify-center mb-4">

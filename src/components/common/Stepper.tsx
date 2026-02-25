@@ -12,8 +12,8 @@ export const Stepper: React.FC<StepperProps> = ({ steps, activeStep, className }
       {Array.from({ length: steps }).map((_, idx) => (
         <div
           key={idx}
-          className={`h-2 w-20 rounded-full border border-[#EAF0FF] ${idx < activeStep ? 'bg-[#252955]' : 'bg-[#EAF0FF]'}`}
-            />
+          className={`h-1.5 w-8 md:h-2 md:w-20 rounded-full border border-[#EAF0FF] ${idx < activeStep ? 'bg-[#252955]' : 'bg-[#EAF0FF]'}`}
+        />
       ))}
     </div>
   );

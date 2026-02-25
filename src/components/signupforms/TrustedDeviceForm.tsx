@@ -19,7 +19,7 @@ interface TrustedDeviceFormProps {
     };
     setTrustedDeviceData: (v: { registerDevice: boolean; validityPeriod: string }) => void;
     onConfirm?: () => void;
-    kycData: { employeeId: string; cnic: string; username: string; mobileNo: string };
+    kycData: { employeeId: string; cnic: string; userName: string; mobileNo: string };
     mfaData: { setupKey: string; authenticatorCode: string };
     otpPreferenceData: { method: string; destination: string; otpCode: string };
 }
@@ -56,7 +56,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
             const payload = {
                 employeeId: kycData?.employeeId,
                 cnic: kycData?.cnic,
-                username: kycData?.username,
+                username: kycData?.userName,
                 mobileNo: kycData?.mobileNo,
                 setUpKey: mfaData?.setupKey,
                 methodId: otpPreferenceData?.method,

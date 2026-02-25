@@ -7,7 +7,16 @@ interface OTPInputProps {
   length?: number;
 }
 
-export const OTPInput: React.FC<OTPInputProps> = ({ value, onChange, error, length = 6 }) => {
+export const OTPInput: React.FC<OTPInputProps> = ({ value, onChange, length = 6 }) => {
+  // Handler for pasting OTP
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pasted = e.clipboardData.getData('Text').replace(/\D/g, '').slice(0, length);
+    if (pasted.length) {
+      onChange(pasted.padEnd(length, ''));
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className="flex justify-center gap-3 px-4">
       {Array.from({ length }).map((_, index) => (
@@ -15,10 +24,9 @@ export const OTPInput: React.FC<OTPInputProps> = ({ value, onChange, error, leng
           key={index}
           type="text"
           maxLength={1}
-          className={`w-12 h-14 text-center text-2xl font-bold border rounded-lg focus:outline-none transition-all
-            ${error ? 'border-red-500' : 'border-[#D9D9D9] focus:border-[#252955]'}
-          `}
+          className={`w-12 h-14 text-center text-2xl font-bold border rounded-lg focus:outline-none transition-all`}
           style={{ boxSizing: 'border-box' }}
+          onPaste={handlePaste}
           onChange={e => {
             const val = e.target.value;
             if (/^\d*$/.test(val)) {
