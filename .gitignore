@@ -24,9 +24,10 @@ node_modules/.cache/
 
 
 # Keep these in repo:
-# .env
-# .env.staging
-# .env.example
+.env
+.env.staging
+.env.example
+.env.production
 
 # Logs
 npm-debug.log*
