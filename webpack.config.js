@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
     // Determine which .env file to use
@@ -75,6 +76,7 @@ module.exports = (env, argv) => {
                 filename: 'remoteEntry.js',
                 exposes: {
                     './App': './src/App.tsx',
+                    './LoginForm': './src/pages/LoginForm.tsx',
                     './SignUpForm': './src/pages/SignUpForm.tsx',
                     './services/auth': './src/services/auth/index.ts',
                 },
@@ -141,6 +143,15 @@ module.exports = (env, argv) => {
             new Dotenv({
                 path: path.resolve(__dirname, envFile),
                 systemvars: true,
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: 'public/assets',
+                        to: 'assets',
+                        noErrorOnMissing: true,
+                    },
+                ],
             }),
         ],
         devServer: {
