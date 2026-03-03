@@ -40,5 +40,13 @@ declare module 'customMain/observability' {
         reportPageView(path: string): void;
         reportError(context: string, error: Error): void;
         isReady(): boolean;
+        setUserContext(userId: string, role: string, email?: string): void;
+        clearUserContext(): void;
+        reportCustomEvent(
+            eventName: string,
+            tags?: Record<string, string | number | boolean>,
+        ): void;
+        reportLongTask(durationMs: number, mfeName?: string): void;
     };
+    export function useMfeRouteTracker(): void;
 }

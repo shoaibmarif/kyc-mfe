@@ -4,4 +4,4 @@
  * loads. This module gives each MFE a typed handle to the shared Tracer utility
  * without triggering a second agent registration.
  */
-export { Tracer } from 'customMain/observability';
+export { Tracer, useMfeRouteTracker } from 'customMain/observability';
