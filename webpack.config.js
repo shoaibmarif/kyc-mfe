@@ -80,6 +80,7 @@ module.exports = (env, argv) => {
                     './SignUpForm': './src/pages/SignUpForm.tsx',
                     './ForgotPasswordForm': './src/pages/ForgotPasswordForm.tsx',
                     './DormantUserKYCForm': './src/pages/DormantUserKYCForm.tsx',
+                    './PasswordReset': './src/pages/PasswordReset.tsx',
                     './services/auth': './src/services/auth/index.ts',
                 },
                 remotes: {

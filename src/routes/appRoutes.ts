@@ -1,7 +1,7 @@
 export const APP_ROUTES = {
-    SIGNUP: '/sign-up',
-    FORGOT_PASSWORD: '/forgot-password',
-    DORMANT_USER_KYC: '/dormant-user-kyc',
+    SIGNUP: 'signup',
+    FORGOT_PASSWORD: 'forgot-password',
+    DORMANT_USER_KYC: 'dormant-user-kyc',
     NOT_FOUND: '/404',
 };
 

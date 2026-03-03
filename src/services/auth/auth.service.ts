@@ -55,7 +55,6 @@ export const authService = {
     updateUserKYC: (data: { username: string; mobile?: string; cnic?: string }) =>
         apiService.post<ApiResponse>(AUTH_API_URLS.UPDATE_USER_KYC, data),
 
-
     forgotPasswordKYC: (data: {
         employeeID?: string;
         cnicNumber?: string;
@@ -66,7 +65,6 @@ export const authService = {
         isDormantUser: boolean;
     }) => apiService.post<ApiResponse>(AUTH_API_URLS.FORGOT_USER_KYC, data),
 
-    
     dormantUserKYC: (data: {
         employeeID?: string;
         cnicNumber?: string;
@@ -77,4 +75,9 @@ export const authService = {
         isDormantUser: boolean;
     }) => apiService.post<ApiResponse>(AUTH_API_URLS.DORMANT_USER_KYC, data),
 
+    passwordReset: (data: {
+        userName?: string;
+        newPassword?: string;
+        deviceId?: string;
+    }) => apiService.post<ApiResponse>(AUTH_API_URLS.PASSWORD_RESET, data),
 };
