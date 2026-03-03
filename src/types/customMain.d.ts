@@ -31,3 +31,14 @@ declare module 'customMain/api/api.service.types' {
     export type ApiSuccessResponse<_T = unknown> = any;
     export type ApiErrorResponse = any;
 }
+
+declare module 'customMain/observability' {
+    export const Tracer: {
+        mfeMounting(name: string): void;
+        mfeMounted(name: string): void;
+        mfeUnmounted(name: string): void;
+        reportPageView(path: string): void;
+        reportError(context: string, error: Error): void;
+        isReady(): boolean;
+    };
+}

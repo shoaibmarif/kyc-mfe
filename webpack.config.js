@@ -135,6 +135,10 @@ module.exports = (env, argv) => {
                         singleton: true,
                         strictVersion: false,
                     },
+                    'skywalking-client-js': {
+                        singleton: true,
+                        strictVersion: false,
+                    },
                 },
             }),
             new HtmlWebpackPlugin({
