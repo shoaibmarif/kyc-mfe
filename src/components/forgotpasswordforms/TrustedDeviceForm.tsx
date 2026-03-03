@@ -25,7 +25,13 @@ interface TrustedDeviceFormProps {
         registerDevice: boolean;
     };
     setTrustedDeviceData: (v: { methodId: string; registerDevice: boolean }) => void;
-    kycData: { employeeId: string; cnic: string; userName: string; mobileNo: string, newPassword: string };
+    kycData: {
+        employeeId: string;
+        cnic: string;
+        userName: string;
+        mobileNo: string;
+        newPassword: string;
+    };
 }
 
 const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
@@ -115,21 +121,16 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
 
         setIsLoading(true);
         try {
-            // Generate a new deviceId for each submission
-            const randomId = Math.random().toString(36).substring(2, 10);
-            const deviceId = `dev_${randomId}`;
             const payload = {
-                employeeId: kycData?.employeeId,
-                cnic: kycData?.cnic,
+                employeeID: kycData?.employeeId,
+                cnicNumber: kycData?.cnic,
                 username: kycData?.userName,
                 password: kycData?.newPassword,
-                mobileNo: kycData?.mobileNo,
-                methodId: Number(data.methodId),
-                isRegisterDevice: data.registerDevice,
-                deviceId,
-                isMigrated: false,
+                mobileNumber: kycData?.mobileNo,
+                isForgotPassword: true,
+                isDormantUser: false,
             };
-            await authService.signupTrustedDevice(payload);
+            await authService.dormantUserKYC(payload);
             setTrustedDeviceData({
                 methodId: data.methodId,
                 registerDevice: data.registerDevice,
@@ -154,7 +155,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                 </div>
 
                 <div className="flex justify-center pt-1">
-                    <Stepper steps={5} activeStep={5} />
+                    <Stepper steps={3} activeStep={3} />
                 </div>
 
                 <div className="space-y-4 pt-1">
@@ -198,8 +199,8 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                             Trusted Device
                         </h4>
                         <p className="text-center text-[12px] text-[#9A9A9A] px-2">
-                            You may register this device as trusted to avoid repeated MFA prompts
-                            for new/untrusted devices and for dormancy/reactivation.
+                            You may register this device as trusted to avoid repeated OTP prompts
+                            for password recovery on new/untrusted devices.
                         </p>
                     </div>
 
@@ -219,7 +220,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                                             Register this device as Trusted?
                                         </span>
                                         <span className="text-[11px] leading-4 text-[#9A9A9A]">
-                                            You won't be asked for MFA on this device for 30 days.
+                                            You won't be asked for OTP on this device for 30 days.
                                         </span>
                                     </span>
                                 </label>
@@ -230,7 +231,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
 
                 <div className="pt-6 flex justify-center">
                     <Button type="submit" variant="primary" size="md" loading={isLoading}>
-                        Continue to Application
+                        Complete Password Reset
                     </Button>
                 </div>
                 {submitError && <p className="text-center text-red-500 text-xs">{submitError}</p>}
@@ -242,10 +243,10 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                     setShowSuccessModal(false);
                     navigate('/');
                 }}
-                imageSrc={getAssetPath(`assets/images/user-onboarding.png`)}
-                title="User onboarded successfully"
-                description="You have successfully logged in to your account. Redirecting you to the dashboard."
-                buttonText="Ok"
+                imageSrc={getAssetPath(`assets/images/otp-verified.png`)}
+                title="Password Reset Successful"
+                description="Your password has been successfully updated. You can now log in with your new password. Please keep it secure."
+                buttonText="Back to Login"
             />
         </>
     );

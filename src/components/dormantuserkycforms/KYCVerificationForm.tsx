@@ -95,12 +95,12 @@ const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
         return (
             <form onSubmit={handleSubmit(handleKycSubmit)} className="w-full px-4 py-4">
                 <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-primary">KYC for New User</h3>
+                    <h3 className="text-2xl font-bold text-primary">KYC Re-Validation (Dormant)</h3>
                     <p className="text-[#9A9A9A] text-sm mb-6">
                         Enter your email and password to sign in!
                     </p>
                     <div className="flex justify-center">
-                        <Stepper steps={5} activeStep={1} />
+                        <Stepper steps={3} activeStep={1} />
                     </div>
                 </div>
 

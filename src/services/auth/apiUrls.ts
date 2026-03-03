@@ -10,6 +10,8 @@ export const AUTH_API_URLS = {
     LOGOUT: `${AUTH_BASE}/logout`,
     POST_SIGNUP_KYC_VERIFICATION: `${baseURLkyc}${KYC_BASE}/signup-kyc-verification`,
     UPDATE_USER_KYC: `${baseURLLogin}${AUTH_USER_BASE_API}/update-user-kyc`,
+    FORGOT_USER_KYC: `${baseURLkyc}${KYC_BASE}/forgot-kyc-verification`,
+    DORMANT_USER_KYC: `${baseURLkyc}${KYC_BASE}/dormant-kyc-verification`,
 };
 
 export const OTP_API_URLS = {

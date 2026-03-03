@@ -85,56 +85,18 @@ export const otpVerificationSchema = z.object({
 
 export type OTPVerificationFormData = z.infer<typeof otpVerificationSchema>;
 
-// MFA Enrollment Schema
-export const mfaEnrollmentSchema = z.object({
-    setupKey: localValidations.setupKey,
-    qrCode: localValidations.qrCode,
-    authenticatorCode: localValidations.otpCode,
+export const mfaOtpFormSchema = z.object({
+    otpCode: localValidations.otpCode,
 });
 
-export type MFAEnrollmentFormData = z.infer<typeof mfaEnrollmentSchema>;
-
-// OTP Delivery Preference Schema
-export const otpDeliveryPreferenceSchema = z.object({
-    method: z.union([z.string(), z.number()]),
-    otpCode: z
-        .string()
-        .optional()
-        .refine((val) => !val || REGEX_PATTERNS.otpCode.test(val), {
-            message: 'OTP code must be 6 digits',
-        }),
-});
-
-export type OTPDeliveryPreferenceFormData = z.infer<typeof otpDeliveryPreferenceSchema>;
+export type MFAOTPFormData = z.infer<typeof mfaOtpFormSchema>;
 
 // Trusted Device Schema
 export const trustedDeviceSchema = z.object({
-    registerDevice: z.boolean(),
-    validityPeriod: z
+    methodId: z
         .string()
-        .refine(
-            (val) => {
-                if (!val) return true; // Optional when registerDevice is false
-                const num = parseInt(val);
-                return !isNaN(num) && num > 0 && num <= 365;
-            },
-            {
-                message: 'Validity period must be between 1 and 365 days',
-            }
-        )
-        .optional()
-        .or(z.literal('')),
-}).refine(
-    (data) => {
-        if (data.registerDevice) {
-            return data.validityPeriod && data.validityPeriod !== '';
-        }
-        return true;
-    },
-    {
-        message: 'Validity period is required when registering device',
-        path: ['validityPeriod'],
-    }
-);
+        .min(1, 'Please select a preferred method'),
+    registerDevice: z.boolean(),
+});
 
 export type TrustedDeviceFormData = z.infer<typeof trustedDeviceSchema>;

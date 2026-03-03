@@ -2,6 +2,7 @@ declare module 'customMain/components' {
     export const Button: React.ComponentType<any>;
     export const TextInput: React.ComponentType<any>;
     export const Select: React.ComponentType<any>;
+    export const Checkbox: React.ComponentType<any>;
     export type SelectOption = any;
 }
 
@@ -12,6 +13,15 @@ declare module 'customMain/hooks' {
         mode?: string;
         reValidateMode?: string;
     }): any;
+}
+
+declare module 'customMain/utils' {
+    export const showToast: {
+        success: (message: string, testId?: string, options?: any) => void;
+        error: (message: string, testId?: string, options?: any) => void;
+        info: (message: string, testId?: string, options?: any) => void;
+        warning: (message: string, testId?: string, options?: any) => void;
+    };
 }
 
 declare module 'customMain/api' {

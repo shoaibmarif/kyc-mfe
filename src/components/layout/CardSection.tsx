@@ -11,7 +11,7 @@ export const CardSection: React.FC<CardSectionProps> = ({ children }) => {
                     WeBOC CENTRAL ACCESS
                 </h2>
                 <p className="text-white text-md">
-                    Unified Authentication For WeBOC 2.0 (Demo)
+                    Unified Authentication For WeBOC 2.0
                 </p>
             </div>
 

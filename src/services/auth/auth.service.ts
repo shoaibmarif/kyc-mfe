@@ -45,14 +45,36 @@ export const authService = {
         cnic?: string;
         mobileNo?: string;
         username?: string;
-        setUpKey?: string;
-        methodId?: string;
+        password?: string;
+        methodId?: number;
         isRegisterDevice: boolean;
         isMigrated: boolean;
         deviceId?: string;
-        validityPeriod?: number;
     }) => apiService.post<ApiResponse>(OTP_API_URLS.SIGNUP_TRUSTED_DEVICE, data),
 
     updateUserKYC: (data: { username: string; mobile?: string; cnic?: string }) =>
         apiService.post<ApiResponse>(AUTH_API_URLS.UPDATE_USER_KYC, data),
+
+
+    forgotPasswordKYC: (data: {
+        employeeID?: string;
+        cnicNumber?: string;
+        mobileNumber?: string;
+        username?: string;
+        password?: string;
+        isForgotPassword: boolean;
+        isDormantUser: boolean;
+    }) => apiService.post<ApiResponse>(AUTH_API_URLS.FORGOT_USER_KYC, data),
+
+    
+    dormantUserKYC: (data: {
+        employeeID?: string;
+        cnicNumber?: string;
+        mobileNumber?: string;
+        username?: string;
+        password?: string;
+        isForgotPassword: boolean;
+        isDormantUser: boolean;
+    }) => apiService.post<ApiResponse>(AUTH_API_URLS.DORMANT_USER_KYC, data),
+
 };

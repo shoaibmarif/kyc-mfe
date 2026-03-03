@@ -1,17 +1,11 @@
 import { useState } from 'react';
 import { AuthLayout } from '../components/layout/AuthLayout';
-import KYCVerificationForm from '../components/signupforms/KYCVerificationForm';
-import OTPVerificationForm from '../components/signupforms/OTPVerificationForm';
-import MFAEnrollmentForm from '../components/signupforms/MFAEnrollmentForm';
-import OTPDeliveryPreferenceForm from '../components/signupforms/MFAOTPForm';
-import TrustedDeviceForm from '../components/signupforms/TrustedDeviceForm';
+import KYCVerificationForm from '../components/forgotpasswordforms/KYCVerificationForm';
+import OTPVerificationForm from '../components/forgotpasswordforms/OTPVerificationForm';
+import TrustedDeviceForm from '../components/forgotpasswordforms/TrustedDeviceForm';
 
-interface SignUpFormProps {
-    onNavigateToSignUp?: () => void;
-}
-
-const SignUpForm: React.FC<SignUpFormProps> = () => {
-    const [step, setStep] = useState<'kyc' | 'otp' | 'mfa' | 'otpMFA' | 'trusted'>('kyc');
+const ForgotPasswordForm: React.FC = () => {
+    const [step, setStep] = useState<'kyc' | 'otp' | 'trusted'>('kyc');
     const [kycData, setKycData] = useState({
         userName: '',
         employeeId: '',
@@ -21,9 +15,6 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
         confirmPassword: '',
     });
     const [otpVerificationData, setOtpVerificationData] = useState({ otpCode: '' });
-    const [mfaOTPData, setMfaOTPData] = useState({
-        otpCode: '',
-    });
     const [trustedDeviceData, setTrustedDeviceData] = useState({
         methodId: '',
         registerDevice: false,
@@ -45,22 +36,6 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
                     setOtpVerificationData={setOtpVerificationData}
                     mobileNo={kycData.mobileNo}
                     onCancel={() => setStep('kyc')}
-                    onConfirm={() => setStep('mfa')}
-                />
-            )}
-
-            {step === 'mfa' && (
-                <MFAEnrollmentForm
-                    onSuccess={() => setStep('otpMFA')}
-                />
-            )}
-
-            {step === 'otpMFA' && (
-                <OTPDeliveryPreferenceForm
-                    mfaOTPData={mfaOTPData}
-                    setMfaOTPData={setMfaOTPData}
-                    onCancel={() => setStep('mfa')}
-                    mobileNo={kycData.mobileNo}
                     onConfirm={() => setStep('trusted')}
                 />
             )}
@@ -76,5 +51,4 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
     );
 };
 
-export default SignUpForm;
-
+export default ForgotPasswordForm;

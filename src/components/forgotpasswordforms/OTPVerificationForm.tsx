@@ -90,7 +90,7 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
                 </div>
 
                 <div className="flex justify-center">
-                    <Stepper steps={5} activeStep={2} />
+                    <Stepper steps={3} activeStep={2} />
                 </div>
 
                 {/* Timer/Resend Section */}

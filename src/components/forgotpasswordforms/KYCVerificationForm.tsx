@@ -95,12 +95,12 @@ const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
         return (
             <form onSubmit={handleSubmit(handleKycSubmit)} className="w-full px-4 py-4">
                 <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-primary">KYC for New User</h3>
+                    <h3 className="text-2xl font-bold text-primary">Forgot Password</h3>
                     <p className="text-[#9A9A9A] text-sm mb-6">
-                        Enter your email and password to sign in!
+                        Verify your identity to securely reset your account password.
                     </p>
                     <div className="flex justify-center">
-                        <Stepper steps={5} activeStep={1} />
+                        <Stepper steps={3} activeStep={1} />
                     </div>
                 </div>
 
@@ -139,18 +139,9 @@ const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
                 </div>
 
                 <div className="mt-6 rounded border border-[#2529551A] bg-[#F3F5FC] px-3 py-2">
-                    <div className="flex items-center gap-2">
-                        <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full border border-[#8A90A8]">
-                            <img
-                                src={getAssetPath('assets/images/infoicon.png')}
-                                alt="Info"
-                                className="h-2.5 w-2.5 object-contain"
-                            />
-                        </div>
-                        <p className="text-[11px] leading-4 text-[#6D738F]">
-                            Password policy: minimum 8 characters, including uppercase letter,
-                            lowercase letter, number, and symbol. HRMS is the source of truth;
-                            discrepancies are auto-synchronized from HRMS.
+                    <div className="flex items-center justify-center gap-2">
+                        <p className="text-[11px] leading-4 text-[#6D738F] text-center">
+                            Enter Mobile Number Registered with FBR HRMS
                         </p>
                     </div>
                 </div>
