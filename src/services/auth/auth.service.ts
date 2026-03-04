@@ -15,6 +15,8 @@ export const authService = {
         cnicNumber: string;
         mobileNumber: string;
         password: string;
+        isForgotPassword: boolean;
+        isDormantUser: boolean;
     }) => apiService.post<ApiResponse>(AUTH_API_URLS.POST_SIGNUP_KYC_VERIFICATION, data),
 
     sendOTPMobile: (data: { mobileNo: string }) =>
