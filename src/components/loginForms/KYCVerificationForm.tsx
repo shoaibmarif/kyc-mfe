@@ -79,6 +79,8 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
                     mobileNumber: data.mobileNo,
                     username: data.userName,
                     password: data.newPassword,
+                    isForgotPassword: false,
+                    isDormantUser: false
                 });
                 await authService.sendOTPMobile({ mobileNo: data.mobileNo });
                 setKycData(data);
