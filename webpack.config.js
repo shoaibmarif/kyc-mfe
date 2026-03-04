@@ -167,6 +167,15 @@ module.exports = (env, argv) => {
             historyApiFallback: true,
             client: {
                 overlay: false,
+                // Without this, the HMR WebSocket client defaults to window.location.port
+                // (port 5000 = shell) when loaded via Module Federation, causing an
+                // infinite reconnect loop and dozens of dead sockets in the network tab.
+                webSocketURL: {
+                    hostname: 'localhost',
+                    pathname: '/ws',
+                    port: parseInt(envVars.REMOTE_PORT) || 5005,
+                    protocol: 'ws',
+                },
             },
             headers: {
                 'Access-Control-Allow-Origin': '*',
