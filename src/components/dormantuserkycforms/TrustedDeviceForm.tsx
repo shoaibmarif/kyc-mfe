@@ -225,7 +225,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
 
                 <div className="pt-6 flex justify-center">
                     <Button type="submit" variant="primary" size="md" loading={isLoading}>
-                        Reactivate Account
+                        Continue
                     </Button>
                 </div>
                 {submitError && <p className="text-center text-red-500 text-xs">{submitError}</p>}

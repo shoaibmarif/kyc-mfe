@@ -130,7 +130,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                 isForgotPassword: true,
                 isDormantUser: false,
             };
-            await authService.dormantUserKYC(payload);
+            await authService.forgotPasswordKYC(payload);
             setTrustedDeviceData({
                 methodId: data.methodId,
                 registerDevice: data.registerDevice,
@@ -142,6 +142,8 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
             setIsLoading(false);
         }
     };
+
+    console.log('method options', methodOptions);
 
     return (
         <>
@@ -231,7 +233,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
 
                 <div className="pt-6 flex justify-center">
                     <Button type="submit" variant="primary" size="md" loading={isLoading}>
-                        Complete Password Reset
+                        Continue
                     </Button>
                 </div>
                 {submitError && <p className="text-center text-red-500 text-xs">{submitError}</p>}
