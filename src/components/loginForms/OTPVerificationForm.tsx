@@ -8,7 +8,7 @@ import { otpVerificationSchema, type OTPVerificationFormData } from '../../pages
 import { OTPInput } from '../common/OTPInput';
 import { getAssetPath } from '../../utils/assets';
 import CountdownTimer from '../common/CountdownTimer';
-import Modal from '../common/OTPModal';
+import Modal from '../common/Modal';
 import Stepper from '../common/Stepper';
 
 interface OTPVerificationFormProps {

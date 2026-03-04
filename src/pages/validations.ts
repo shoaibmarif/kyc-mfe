@@ -85,56 +85,38 @@ export const otpVerificationSchema = z.object({
 
 export type OTPVerificationFormData = z.infer<typeof otpVerificationSchema>;
 
-// MFA Enrollment Schema
-export const mfaEnrollmentSchema = z.object({
-    setupKey: localValidations.setupKey,
-    qrCode: localValidations.qrCode,
-    authenticatorCode: localValidations.otpCode,
+export const mfaOtpFormSchema = z.object({
+    otpCode: localValidations.otpCode,
 });
 
-export type MFAEnrollmentFormData = z.infer<typeof mfaEnrollmentSchema>;
-
-// OTP Delivery Preference Schema
-export const otpDeliveryPreferenceSchema = z.object({
-    method: z.union([z.string(), z.number()]),
-    otpCode: z
-        .string()
-        .optional()
-        .refine((val) => !val || REGEX_PATTERNS.otpCode.test(val), {
-            message: 'OTP code must be 6 digits',
-        }),
-});
-
-export type OTPDeliveryPreferenceFormData = z.infer<typeof otpDeliveryPreferenceSchema>;
+export type MFAOTPFormData = z.infer<typeof mfaOtpFormSchema>;
 
 // Trusted Device Schema
 export const trustedDeviceSchema = z.object({
-    registerDevice: z.boolean(),
-    validityPeriod: z
+    methodId: z
         .string()
-        .refine(
-            (val) => {
-                if (!val) return true; // Optional when registerDevice is false
-                const num = parseInt(val);
-                return !isNaN(num) && num > 0 && num <= 365;
-            },
-            {
-                message: 'Validity period must be between 1 and 365 days',
-            }
-        )
-        .optional()
-        .or(z.literal('')),
-}).refine(
-    (data) => {
-        if (data.registerDevice) {
-            return data.validityPeriod && data.validityPeriod !== '';
-        }
-        return true;
-    },
-    {
-        message: 'Validity period is required when registering device',
-        path: ['validityPeriod'],
-    }
-);
+        .min(1, 'Please select a preferred method'),
+    registerDevice: z.boolean(),
+});
 
 export type TrustedDeviceFormData = z.infer<typeof trustedDeviceSchema>;
+
+export const passwordResetSchema = z
+    .object({
+        userName: userNameValidation,
+        newPassword: z
+            .string()
+            .min(8, 'Password must be at least 8 characters')
+            .max(32, 'Password must not exceed 32 characters')
+            .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+            .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+            .regex(/[0-9]/, 'Password must contain at least one number')
+            .regex(/[^A-Za-z0-9]/, 'Password must contain at least one symbol'),
+        confirmPassword: z.string().min(1, 'Confirm Password is required'),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+        message: 'Passwords do not match with new password',
+        path: ['confirmPassword'],
+    });
+
+export type PasswordResetFormData = z.infer<typeof passwordResetSchema>;

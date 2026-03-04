@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'customMain/components';
 
-interface OTPModalProps {
+interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     imageSrc: string;
@@ -10,7 +10,7 @@ interface OTPModalProps {
     buttonText?: string;
 }
 
-export const OTPModal: React.FC<OTPModalProps> = ({
+export const Modal: React.FC<ModalProps> = ({
     isOpen,
     onClose,
     imageSrc,
@@ -29,7 +29,7 @@ export const OTPModal: React.FC<OTPModalProps> = ({
             <div className="relative bg-white rounded-xl shadow-lg p-8 w-full max-w-sm text-center z-10">
                 <img
                     src={imageSrc}
-                    alt="OTPModal Visual"
+                    alt="Modal Visual"
                     className="mx-auto mb-6 w-24 h-24 object-contain"
                 />
                 <h2 className="text-2xl font-bold text-primary mb-2">{title}</h2>
@@ -48,4 +48,4 @@ export const OTPModal: React.FC<OTPModalProps> = ({
     );
 };
 
-export default OTPModal;
+export default Modal;

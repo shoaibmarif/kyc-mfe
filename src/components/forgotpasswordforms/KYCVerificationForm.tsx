@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Button, TextInput } from 'customMain/components';
 import { useZodForm } from 'customMain/hooks';
 import { authService } from '../../services/auth.service';
@@ -11,10 +12,8 @@ interface KYCVerificationFormProps {
     kycData: KYCVerificationFormData;
     setKycData: (v: KYCVerificationFormData) => void;
     onConfirm?: () => void;
-    onCancel?: () => void;
 }
 
-// Field configuration
 const FORM_FIELDS = [
     {
         name: 'userName',
@@ -60,8 +59,9 @@ const FORM_FIELDS = [
     },
 ] as const;
 
-export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
+const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
     ({ kycData, setKycData, onConfirm }) => {
+        const navigate = useNavigate();
         const {
             control,
             handleSubmit,
@@ -71,6 +71,10 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
             defaultValues: kycData,
         });
 
+        const handleCancel = () => {
+            navigate('/');
+        };
+
         const handleKycSubmit = async (data: KYCVerificationFormData) => {
             try {
                 await authService.signupKYCVerification({
@@ -79,7 +83,7 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
                     mobileNumber: data.mobileNo,
                     username: data.userName,
                     password: data.newPassword,
-                    isForgotPassword: false,
+                    isForgotPassword: true,
                     isDormantUser: false
                 });
                 await authService.sendOTPMobile({ mobileNo: data.mobileNo });
@@ -93,9 +97,12 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
         return (
             <form onSubmit={handleSubmit(handleKycSubmit)} className="w-full px-4 py-4">
                 <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-primary mb-4">Verify Identity (KYC)</h3>
+                    <h3 className="text-2xl font-bold text-primary">Forgot Password</h3>
+                    <p className="text-[#9A9A9A] text-sm mb-6">
+                        Verify your identity to securely reset your account password.
+                    </p>
                     <div className="flex justify-center">
-                        <Stepper steps={3} activeStep={2} />
+                        <Stepper steps={3} activeStep={1} />
                     </div>
                 </div>
 
@@ -133,15 +140,33 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
                     ))}
                 </div>
 
-                <div className="mt-6">
+                <div className="mt-6 rounded border border-[#2529551A] bg-[#F3F5FC] px-3 py-2">
+                    <div className="flex items-center justify-center gap-2">
+                        <p className="text-[11px] leading-4 text-[#6D738F] text-center">
+                            Enter Mobile Number Registered with FBR HRMS
+                        </p>
+                    </div>
+                </div>
+
+                <div className="mt-6 flex gap-3">
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        size="md"
+                        onClick={handleCancel}
+                        className="w-full"
+                        disabled={isSubmitting}
+                    >
+                        Cancel
+                    </Button>
                     <Button
                         type="submit"
                         variant="primary"
-                        size="lg"
+                        size="md"
                         loading={isSubmitting}
                         className="w-full"
                     >
-                        Confirm And Request OTP
+                        Confirm
                     </Button>
                 </div>
             </form>
@@ -150,3 +175,4 @@ export const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
 );
 
 KYCVerificationForm.displayName = 'KYCVerificationForm';
+export default KYCVerificationForm;
