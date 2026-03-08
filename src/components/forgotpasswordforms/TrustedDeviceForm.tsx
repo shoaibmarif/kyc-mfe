@@ -7,6 +7,7 @@ import { authService } from '../../services/auth.service';
 import { useEffect, useState, useTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAssetPath } from '../../utils/assets';
+import { APP_ROUTES } from '../../routes/pathUrl';
 
 type DeliveryMethodOption = {
     value: string;
@@ -243,7 +244,7 @@ const TrustedDeviceForm: React.FC<TrustedDeviceFormProps> = ({
                 isOpen={showSuccessModal}
                 onClose={() => {
                     setShowSuccessModal(false);
-                    navigate('/');
+                    navigate(APP_ROUTES.ROOT);
                 }}
                 imageSrc={getAssetPath(`assets/images/otp-verified.png`)}
                 title="Password Reset Successful"

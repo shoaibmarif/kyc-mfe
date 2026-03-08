@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { KYCVerificationForm, OTPVerificationForm } from '../components/loginForms';
 import { AuthLayout } from '../components/layout/AuthLayout';
+import { APP_ROUTES } from '../routes/pathUrl';
 
 interface LoginFormProps {
     onNavigateToLogin?: () => void;
@@ -19,11 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     const [otpVerificationData, setOtpVerificationData] = useState({ otpCode: '' });
 
     const handleNavigateToLogin = () => {
-        // if (onNavigateToLogin) {
-        //     onNavigateToLogin();
-        // } else {
-        window.location.href = '/dashboard';
-        // }
+        window.location.href = APP_ROUTES.PROTECTED_DASHBOARD;
     };
 
     return (

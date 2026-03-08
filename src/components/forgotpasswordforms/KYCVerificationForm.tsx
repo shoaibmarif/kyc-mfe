@@ -7,6 +7,7 @@ import { authService } from '../../services/auth.service';
 import { kycVerificationSchema, type KYCVerificationFormData } from '../../pages/validations';
 import Stepper from '../common/Stepper';
 import { getAssetPath } from '../../utils/assets';
+import { APP_ROUTES } from '../../routes/pathUrl';
 
 interface KYCVerificationFormProps {
     kycData: KYCVerificationFormData;
@@ -72,7 +73,7 @@ const KYCVerificationForm: React.FC<KYCVerificationFormProps> = memo(
         });
 
         const handleCancel = () => {
-            navigate('/');
+            navigate(APP_ROUTES.ROOT);
         };
 
         const handleKycSubmit = async (data: KYCVerificationFormData) => {

@@ -16,7 +16,7 @@ module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
     // Check process.env FIRST (Netlify vars), then fall back to .env files
     const customMainUrl =
-        process.env.REACT_HOST_MAIN_URL || envVars.REACT_HOST_MAIN_URL || 'http://localhost:5000';
+        process.env.REACT_HOST_MAIN_URL || envVars.REACT_HOST_MAIN_URL || 'http://localhost:5173';
 
     return {
         mode: argv.mode || 'development',

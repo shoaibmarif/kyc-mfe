@@ -10,6 +10,7 @@ import { getAssetPath } from '../../utils/assets';
 import CountdownTimer from '../common/CountdownTimer';
 import Modal from '../common/Modal';
 import Stepper from '../common/Stepper';
+import { APP_ROUTES } from '../../routes/pathUrl';
 
 interface OTPVerificationFormProps {
     otpVerificationData: { otpCode: string };
@@ -91,7 +92,7 @@ export const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
             // Handle error
         } finally {
             setIsOpen(false);
-            navigate('/dashboard');
+            navigate(APP_ROUTES.PROTECTED_DASHBOARD);
         }
     };
 

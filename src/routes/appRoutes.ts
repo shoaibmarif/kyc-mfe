@@ -1,13 +1,8 @@
-export const APP_ROUTES = {
-    SIGNUP: 'signup',
-    FORGOT_PASSWORD: 'forgot-password',
-    DORMANT_USER_KYC: 'dormant-user-kyc',
-    NOT_FOUND: '/404',
-};
+import { APP_ROUTES } from "./pathUrl";
 
 export const routeConfig = [
     {
-        path: APP_ROUTES.SIGNUP,
+        path: APP_ROUTES.SIGN_UP,
         label: 'Sign Up',
     },
     {
@@ -19,3 +14,5 @@ export const routeConfig = [
         label: 'Dormant User KYC',
     },
 ];
+
+export { APP_ROUTES };

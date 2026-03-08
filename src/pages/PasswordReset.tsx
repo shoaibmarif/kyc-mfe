@@ -9,6 +9,7 @@ import Stepper from '../components/common/Stepper';
 import Modal from '../components/common/Modal';
 import { getAssetPath } from '../utils/assets';
 import { AuthLayout } from '../components/layout';
+import { APP_ROUTES } from '../routes/pathUrl';
 
 const FORM_FIELDS = [
     {
@@ -142,7 +143,7 @@ const PasswordReset: React.FC = () => {
                 isOpen={isSuccessModalOpen}
                 onClose={() => {
                     setIsSuccessModalOpen(false);
-                    navigate('/');
+                    navigate(APP_ROUTES.ROOT);
                 }}
                 imageSrc={getAssetPath('assets/images/otp-verified.png')}
                 title="Password Reset Successfully"
